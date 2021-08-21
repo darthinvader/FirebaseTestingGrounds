@@ -1,4 +1,4 @@
-import firebaseApp, { signIn } from "./services/firebase";
+import firebaseApp, { signIn } from "./services/firebase-auth";
 
 function App() {
   return <button onClick={signIn}>Login</button>;
