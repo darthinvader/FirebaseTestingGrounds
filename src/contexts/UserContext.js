@@ -11,7 +11,9 @@ const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider value={user}>
-      <UpdateContext value={setUser}>{children}</UpdateContext>
+      <UpdateContext.Provider value={setUser}>
+        {children}
+      </UpdateContext.Provider>
     </UserContext.Provider>
   );
 };
