@@ -27,7 +27,6 @@ export const signIn = (setUser) => {
       // The signed-in user info.
       const user = result.user;
       console.log(credential, token, user);
-      setUser(user);
     })
     .catch((error) => {
       // Handle Errors here.
