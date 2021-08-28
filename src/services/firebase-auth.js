@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 
 const firebaseConfig = {
@@ -39,5 +40,7 @@ export const signIn = (setUser) => {
       console.error(errorCode, errorMessage, email, credential);
     });
 };
+
+export const db = getFirestore(firebaseApp);
 
 export default firebaseApp;
