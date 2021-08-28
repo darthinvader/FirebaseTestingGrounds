@@ -28,7 +28,7 @@ auth.onAuthStateChanged((user) => console.log(user));
 
 setPersistence(auth, browserLocalPersistence);
 
-export const signIn = (setUser) => {
+export const signIn = () => {
   signInWithPopup(auth, provider)
     .then((result) => {
       // This gives you a Google Access Token. You can use it to access the Google API.
@@ -48,6 +48,10 @@ export const signIn = (setUser) => {
       const credential = GoogleAuthProvider.credentialFromError(error);
       console.error(errorCode, errorMessage, email, credential);
     });
+};
+
+export const signOut = () => {
+  auth.signOut();
 };
 
 export const db = getFirestore(firebaseApp);
