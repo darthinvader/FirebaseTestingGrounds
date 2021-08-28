@@ -1,6 +1,12 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  getAuth,
+  signInWithPopup,
+  browserLocalPersistence,
+  setPersistence,
+} from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -12,12 +18,15 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_APP_ID,
   measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
-
 const firebaseApp = initializeApp(firebaseConfig);
 
 const provider = new GoogleAuthProvider();
 
-const auth = getAuth();
+export const auth = getAuth();
+
+auth.onAuthStateChanged((user) => console.log(user));
+
+setPersistence(auth, browserLocalPersistence);
 
 export const signIn = (setUser) => {
   signInWithPopup(auth, provider)
