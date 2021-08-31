@@ -14,7 +14,7 @@ function App() {
 
   const starCountRef = ref(database, "books");
   onValue(starCountRef, (snapshot) => {
-    const data = snapshot.val()[0];
+    const data = snapshot.val();
     console.log(data);
   });
   return (
