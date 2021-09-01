@@ -57,6 +57,6 @@ export const signOut = () => {
 
 export const database = getDatabase();
 
-export const db = getFirestore(firebaseApp);
+export const firestoreDB = getFirestore(firebaseApp);
 
 export default firebaseApp;
