@@ -1,4 +1,3 @@
-import { useUpdate } from "../contexts/UserContext";
 import { signIn } from "../services/firebase-auth";
 
 const SignInButton = () => {

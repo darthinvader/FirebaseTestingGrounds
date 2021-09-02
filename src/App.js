@@ -1,5 +1,4 @@
 import SignInButton from "./components/SignInButton";
-import UserProvider from "./contexts/UserContext";
 import {
   getDocs,
   collection,
@@ -29,12 +28,6 @@ function App() {
           console.log(doc.id, " => ", doc.data());
         });
       })();
-      // (async () =>
-      //   await setDoc(doc(firestoreDB, "books"), {
-      //     name: "Los Angeles",
-      //     state: "CA",
-      //     country: "USA",
-      //   }))();
       const starCountRef = ref(database, "books");
       onValue(starCountRef, (snapshot) => {
         const data = snapshot.val();
@@ -42,11 +35,12 @@ function App() {
       });
     }
   }, 2000);
+
   return (
-    <UserProvider>
+    <>
       <SignInButton />
       <SignOutButton />
-    </UserProvider>
+    </>
   );
 }
 
