@@ -11,30 +11,43 @@ import {
 } from "firebase/firestore";
 import { auth, database, firestoreDB } from "./services/firebase-auth";
 import SignOutButton from "./components/SingOutButton";
-import { ref, onValue } from "firebase/database";
+import { ref, onValue, set } from "firebase/database";
+import { useEffect } from "react";
 
 function App() {
-  setTimeout(() => {
-    if (auth.currentUser != null) {
-      (async () => {
-        const q = query(
-          collection(firestoreDB, "books"),
-          where("categories", "array-contains", "base"),
-          limit(10)
-        );
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, " => ", doc.data());
+  useEffect(() => {
+    setTimeout(() => {
+      if (auth.currentUser != null) {
+        (async () => {
+          const q = query(
+            collection(firestoreDB, "books"),
+            where("categories", "array-contains", "base"),
+            limit(10)
+          );
+          const querySnapshot = await getDocs(q);
+          querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data());
+          });
+        })();
+
+        const starCountRef = ref(database, "books");
+        onValue(starCountRef, (snapshot) => {
+          const data = snapshot.val();
+          console.log(data);
         });
-      })();
-      const starCountRef = ref(database, "books");
-      onValue(starCountRef, (snapshot) => {
-        const data = snapshot.val();
-        console.log(data);
-      });
-    }
-  }, 2000);
+        writeUserData("LAS", "Okss", "Dagfs");
+      }
+    }, 2000);
+  }, []);
+  function writeUserData(name, email, imageUrl) {
+    const db = database;
+    set(ref(db, "city/" + name), {
+      email: email,
+      profile_picture: imageUrl,
+    });
+    console.log("I wrote");
+  }
 
   return (
     <>
