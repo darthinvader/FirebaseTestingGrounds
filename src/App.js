@@ -13,6 +13,7 @@ import { auth, database, firestoreDB } from "./services/firebase-auth";
 import SignOutButton from "./components/SingOutButton";
 import { ref, onValue, set } from "firebase/database";
 import { useEffect } from "react";
+import faker from "faker";
 
 function App() {
   useEffect(() => {
@@ -31,20 +32,19 @@ function App() {
           });
         })();
 
-        const starCountRef = ref(database, "city");
+        const starCountRef = ref(database, "users");
         onValue(starCountRef, (snapshot) => {
           const data = snapshot.val();
           console.log(data);
         });
-        writeUserData("LAS", "Okss", "Dagfs");
       }
     }, 2000);
   }, []);
-  function writeUserData(name, email, imageUrl) {
+  function writeUserData(city, country, accountName) {
     const db = database;
-    set(ref(db, "city/" + name), {
-      email: email,
-      profile_picture: imageUrl,
+    set(ref(db, "users/" + city), {
+      country: country,
+      accountName: accountName,
     });
     console.log("I wrote");
   }
@@ -55,10 +55,14 @@ function App() {
       <SignOutButton />
       <button
         onClick={() =>
-          writeUserData("johnhathanasdasdasd", "johnathan@com", "johnathan.com")
+          writeUserData(
+            faker.address.city(),
+            faker.address.country(),
+            faker.finance.accountName()
+          )
         }
       >
-        Click me for data
+        Click me to wrte
       </button>
     </>
   );
