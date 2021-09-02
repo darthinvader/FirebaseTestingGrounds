@@ -40,14 +40,22 @@ function App() {
       }
     }, 2000);
   }, []);
-  function writeUserData(city, country, accountName) {
+  function writeUserData(name, country, accountName) {
     const db = database;
-    set(ref(db, "users/" + city), {
+    set(ref(db, "users/" + name), {
       country: country,
       accountName: accountName,
     });
     console.log("I wrote");
   }
+
+  const addDoc = async (name, country, accountName) => {
+    await setDoc(doc(firestoreDB, "users", name), {
+      country: country,
+      accountName: accountName,
+    });
+    console.log("firestore Wrote");
+  };
 
   return (
     <>
@@ -56,13 +64,24 @@ function App() {
       <button
         onClick={() =>
           writeUserData(
-            faker.address.city(),
+            faker.name.firstName(),
             faker.address.country(),
             faker.finance.accountName()
           )
         }
       >
-        Click me to wrte
+        Realtime write
+      </button>
+      <button
+        onClick={() =>
+          addDoc(
+            faker.name.firstName(),
+            faker.address.country(),
+            faker.finance.accountName()
+          )
+        }
+      >
+        Firestore wrte
       </button>
     </>
   );
