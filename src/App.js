@@ -8,6 +8,7 @@ import {
   query,
   where,
   limit,
+  onSnapshot,
 } from "firebase/firestore";
 import { auth, database, firestoreDB } from "./services/firebase-auth";
 import SignOutButton from "./components/SingOutButton";
@@ -21,14 +22,16 @@ function App() {
       if (auth.currentUser != null) {
         (async () => {
           const q = query(
-            collection(firestoreDB, "books"),
-            where("categories", "array-contains", "base"),
+            collection(firestoreDB, "users"),
+            where("accountName", "!=", null),
             limit(10)
           );
-          const querySnapshot = await getDocs(q);
-          querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data());
+          const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const cities = [];
+            querySnapshot.forEach((doc) => {
+              cities.push(doc.data().country);
+            });
+            console.log("Current countries: ", cities.join(", "));
           });
         })();
 
