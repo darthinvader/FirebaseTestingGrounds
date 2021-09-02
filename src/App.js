@@ -31,7 +31,7 @@ function App() {
           });
         })();
 
-        const starCountRef = ref(database, "books");
+        const starCountRef = ref(database, "city");
         onValue(starCountRef, (snapshot) => {
           const data = snapshot.val();
           console.log(data);
@@ -53,6 +53,13 @@ function App() {
     <>
       <SignInButton />
       <SignOutButton />
+      <button
+        onClick={() =>
+          writeUserData("johnhathanasdasdasd", "johnathan@com", "johnathan.com")
+        }
+      >
+        Click me for data
+      </button>
     </>
   );
 }
