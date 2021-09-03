@@ -41,7 +41,7 @@ function App() {
           console.log(data);
         });
       }
-    }, 2000);
+    }, 500);
   }, []);
   function writeUserData(name, country, accountName) {
     const db = database;
